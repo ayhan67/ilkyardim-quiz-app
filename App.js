@@ -11,74 +11,18 @@ import {
   StatusBar,
   Image,
   BackHandler,
+  Animated,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { questionBank } from './questionBank';
 
 const { width, height } = Dimensions.get('window');
 
-// Örnek sorular
-const questions = [
-  {
-    id: 1,
-    question: "Kanama durumunda ilk yapılması gereken nedir?",
-    options: [
-      "Yarayı ovmak",
-      "Doğrudan baskı uygulamak",
-      "Yarayı soğuk suyla yıkamak",
-      "Turnike yapmak"
-    ],
-    correctAnswer: 1,
-    explanation: "Kanama durumunda ilk olarak temiz bir bez veya gazlı bezle yaranın üzerine doğrudan baskı uygulanmalıdır."
-  },
-  {
-    id: 2,
-    question: "Kalp masajı yapılırken göğüs kafesine hangi hızda basınç uygulanmalıdır?",
-    options: [
-      "Dakikada 60-80 kez",
-      "Dakikada 100-120 kez",
-      "Dakikada 140-160 kez",
-      "Dakikada 30-50 kez"
-    ],
-    correctAnswer: 1,
-    explanation: "Kalp masajı sırasında göğüs kafesine dakikada 100-120 kez basınç uygulanmalıdır."
-  },
-  {
-    id: 3,
-    question: "Yanık durumunda ilk müdahale nedir?",
-    options: [
-      "Buz uygulamak",
-      "Soğuk su ile serinletmek",
-      "Krema sürmek",
-      "Yanığı ovmak"
-    ],
-    correctAnswer: 1,
-    explanation: "Yanık bölgesine 10-20 dakika boyunca soğuk (buzlu değil) su uygulanmalıdır."
-  },
-  {
-    id: 4,
-    question: "Bilinçsiz bir kişinin havayolu açıklığını sağlamak için ne yapılmalıdır?",
-    options: [
-      "Başı öne eğmek",
-      "Başı geriye eğip çeneyi kaldırmak",
-      "Yan yatırmak",
-      "Oturur pozisyona getirmek"
-    ],
-    correctAnswer: 1,
-    explanation: "Bilinçsiz hastanın havayolunu açmak için başı geriye eğilip çene kaldırılmalıdır."
-  },
-  {
-    id: 5,
-    question: "Nöbet geçiren bir kişiye nasıl müdahale edilir?",
-    options: [
-      "Ağzına kaşık koymak",
-      "Güvenli bir yere koymak ve beklemek",
-      "Soğuk su dökmek",
-      "Sarsarak uyandırmaya çalışmak"
-    ],
-    correctAnswer: 1,
-    explanation: "Nöbet geçiren kişi güvenli bir yere konmalı, etrafındaki tehlikeli objeler uzaklaştırılmalı ve nöbet geçmesi beklenmelidir."
-  }
-];
+// questionBank'ten rastgele 40 soru seç
+const getRandomQuestions = () => {
+  const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 40);
+};
 
 export default function App() {
   // Sınavı bitirme modalı için state
@@ -96,21 +40,31 @@ export default function App() {
   const [answeredQuestions, setAnsweredQuestions] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
-  const [timer, setTimer] = useState(300); // 5 dakika = 300 saniye
+  const [timer, setTimer] = useState(2400); // 40 dakika = 2400 saniye
   const [timeUp, setTimeUp] = useState(false);
   const timerRef = useRef(null);
   const [cardHeight, setCardHeight] = useState(120);
   const questionCardRef = useRef(null);
 
+  // Cevap kontrol modu için yeni state'ler
+  const [isReviewMode, setIsReviewMode] = useState(false);
+  const [wrongQuestions, setWrongQuestions] = useState([]);
+  const [reviewQuestionIndex, setReviewQuestionIndex] = useState(0);
+  const [hasViewedAnswers, setHasViewedAnswers] = useState(false); // Yeni state eklendi
+
   // Cevaplanan soruların doğru/yanlış bilgisini tutmak için dizi
   const [answers, setAnswers] = useState([]);
   const [userAnswers, setUserAnswers] = useState([]); // Kullanıcının seçtiği cevapları sakla
+
+  // Animasyon için yeni state
+  const [pulseAnim] = useState(new Animated.Value(1));
+  const [shakeAnim] = useState(new Animated.Value(0));
 
   // Sayaç kırmızı yanıp sönme state'i
   const [blink, setBlink] = useState(true);
   useEffect(() => {
     let blinkInterval;
-    if (timer <= 60) {
+    if (timer <= 300) { // Son 5 dakikada yanıp sönsün
       blinkInterval = setInterval(() => {
         setBlink((prev) => !prev);
       }, 500);
@@ -140,6 +94,59 @@ export default function App() {
     }
     return () => {};
   }, [shuffledQuestions, quizCompleted, timeUp]);
+
+  // Başarı animasyonu
+  useEffect(() => {
+    if (quizCompleted) {
+      const totalQuestions = shuffledQuestions.length || 40;
+      const not = Math.round((score / totalQuestions) * 100);
+      const basarili = not >= 85; // 85 puan ve üzeri geçer
+      
+      if (basarili) {
+        const pulse = Animated.loop(
+          Animated.sequence([
+            Animated.timing(pulseAnim, {
+              toValue: 1.1,
+              duration: 800,
+              useNativeDriver: true,
+            }),
+            Animated.timing(pulseAnim, {
+              toValue: 1,
+              duration: 800,
+              useNativeDriver: true,
+            }),
+          ])
+        );
+        pulse.start();
+        return () => pulse.stop();
+      } else {
+        // Başarısızlık animasyonu - sallama efekti
+        const shake = Animated.sequence([
+          Animated.timing(shakeAnim, {
+            toValue: 10,
+            duration: 100,
+            useNativeDriver: true,
+          }),
+          Animated.timing(shakeAnim, {
+            toValue: -10,
+            duration: 100,
+            useNativeDriver: true,
+          }),
+          Animated.timing(shakeAnim, {
+            toValue: 10,
+            duration: 100,
+            useNativeDriver: true,
+          }),
+          Animated.timing(shakeAnim, {
+            toValue: 0,
+            duration: 100,
+            useNativeDriver: true,
+          }),
+        ]);
+        shake.start();
+      }
+    }
+  }, [quizCompleted, score, shuffledQuestions.length, pulseAnim, shakeAnim]);
 
   // Splash (Giriş) ekranı
   if (showSplash) {
@@ -189,18 +196,18 @@ export default function App() {
             <View style={{ height: 52 }} />
             <Text style={styles.rulesTitle}>KURALLAR :</Text>
             <View style={styles.rulesList}>
-              <Text style={styles.rulesTextSingleLine}>1. Her soru 10 puandır.</Text>
-              <Text style={styles.rulesTextSingleLine}>2. Toplam 5 soru mevcuttur.</Text>
-              <Text style={styles.rulesTextSingleLine}>3. Süreniz 5 dakikadır.</Text>
+              <Text style={styles.rulesTextSingleLine}>1. Her soru 2,5 puandır.</Text>
+              <Text style={styles.rulesTextSingleLine}>2. Toplam 40 soru mevcuttur.</Text>
+              <Text style={styles.rulesTextSingleLine}>3. Süreniz 40 dakikadır.</Text>
               <Text style={styles.rulesTextSingleLine}>4. Doğru yanlışı götürmez.</Text>
-              <Text style={styles.rulesTextSingleLine}>5. Geçme notu 80 puandır.</Text>
+              <Text style={styles.rulesTextSingleLine}>5. Geçme notu 85 puandır.</Text>
             </View>
             <TouchableOpacity
               style={styles.startExamButton}
               onPress={() => {
-                // Soruları karıştır
-                const shuffled = [...questions].sort(() => Math.random() - 0.5);
-                setShuffledQuestions(shuffled);
+                // Rastgele 40 soru seç
+                const randomQuestions = getRandomQuestions();
+                setShuffledQuestions(randomQuestions);
                 setCurrentQuestionIndex(0);
                 setScore(0);
                 setSelectedAnswer(null);
@@ -208,7 +215,7 @@ export default function App() {
                 setAnsweredQuestions(0);
                 setQuizCompleted(false);
                 setTimeUp(false);
-                setTimer(300);
+                setTimer(2400); // 40 dakika
                 setAnswers([]);
                 setUserAnswers([]);
                 setShowInfo(true);
@@ -217,7 +224,6 @@ export default function App() {
               <Text style={styles.startExamButtonText}>Teste Başla</Text>
             </TouchableOpacity>
           </View>
-          {/* Sol alt: Ana Sayfa, Sağ alt: Çıkış */}
           <View style={styles.infoFooterAbsolute}>
             <TouchableOpacity
               style={styles.homeButtonMini}
@@ -283,10 +289,10 @@ export default function App() {
 
   // Test tamamlandıysa
   if (quizCompleted) {
-    // Notu 100 üzerinden hesapla
-    const totalQuestions = shuffledQuestions.length || questions.length;
-    const not = Math.round((score / totalQuestions) * 100);
-    const basarili = not >= 80;
+    // Notu 100 üzerinden hesapla (her doğru cevap 2,5 puan)
+    const totalQuestions = shuffledQuestions.length || 40;
+    const not = Math.round((score * 2.5));
+    const basarili = not >= 85; // 85 puan ve üzeri geçer
     const dogruSayisi = answers.filter(Boolean).length;
     const yanlisSayisi = totalQuestions - dogruSayisi;
 
@@ -295,34 +301,78 @@ export default function App() {
         <StatusBar barStyle="light-content" />
         <SafeAreaView style={styles.safeArea}>
           <View style={styles.completedContainer}>
-            <View style={styles.resultCard}>
-              <Image
-                source={
-                  basarili
-                    ? require('./mutlu.png')
-                    : require('./uzgun.png')
-                }
-                style={{ width: 80, height: 80, marginBottom: 10 }}
-                resizeMode="contain"
-              />
-              <Text style={styles.completedTitle}>Test bitti.</Text>
-              <Text style={styles.finalScore}>Notunuz: {not}</Text>
-              <Text style={styles.finalScore}>
-                <Text>Doğru sayınız: </Text>
-                <Text style={{ fontWeight: 'bold' }}>{dogruSayisi}</Text>
-              </Text>
-              <Text style={styles.finalScore}>
-                <Text>Yanlış sayınız: </Text>
-                <Text style={{ fontWeight: 'bold' }}>{yanlisSayisi}</Text>
-              </Text>
-              {basarili ? (
-                <Text style={styles.successText}>Başarılısınız. Tebrikler</Text>
-              ) : (
-                <Text style={styles.failText}>Malesef bu sefer olmadı</Text>
-              )}
-              <TouchableOpacity style={styles.restartButton} onPress={resetQuiz}>
-                <Text style={styles.restartButtonText}>Tekrar Başla</Text>
+            <Image
+              source={
+                basarili
+                  ? require('./mutlu.png')
+                  : require('./uzgun.png')
+              }
+              style={{ 
+                width: 80, 
+                height: 80, 
+                marginBottom: 10, 
+                marginTop: -100,
+                opacity: basarili ? 0.5 : 1.0 
+              }}
+              resizeMode="contain"
+            />
+            <Text style={styles.completedTitleWhite}>Test bitti.</Text>
+            <Text style={styles.finalScoreWhite}>Notunuz: {not}</Text>
+            <Text style={styles.scoreDetailWhite}>
+              <Text>Doğru sayınız: </Text>
+              <Text style={{ fontWeight: 'bold' }}>{dogruSayisi}</Text>
+            </Text>
+            <Text style={styles.scoreDetailWhite}>
+              <Text>Yanlış sayınız: </Text>
+              <Text style={{ fontWeight: 'bold' }}>{yanlisSayisi}</Text>
+            </Text>
+            {basarili ? (
+              <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+                <Text style={styles.successTextWhiteModern}>
+                  🎉 BAŞARILISINIZ! 🎉{'\n'}
+                  <Text style={styles.congratsTextModern}>✨ Tebrikler ✨</Text>
+                </Text>
+              </Animated.View>
+            ) : (
+              <Animated.View style={{ transform: [{ translateX: shakeAnim }] }}>
+                <Text style={styles.failTextWhiteModern}>
+                  MALESEF BU SEFER OLMADI 😔{'\n'}
+                  
+                </Text>
+              </Animated.View>
+            )}
+            <View style={styles.resultButtonsContainer}>
+              <TouchableOpacity style={styles.restartButtonSmall} onPress={resetQuiz}>
+                <Text style={styles.restartButtonTextSmall}>Tekrar Başla</Text>
               </TouchableOpacity>
+              {!hasViewedAnswers && (
+                <TouchableOpacity 
+                  style={styles.viewAnswersButton} 
+                  onPress={() => {
+                    // Yanlış cevaplanan soruları bul
+                    const wrongQuestionIndexes = [];
+                    answers.forEach((isCorrect, index) => {
+                      if (!isCorrect) {
+                        wrongQuestionIndexes.push(index);
+                      }
+                    });
+                    
+                    if (wrongQuestionIndexes.length > 0) {
+                      setWrongQuestions(wrongQuestionIndexes);
+                      setReviewQuestionIndex(0);
+                      setIsReviewMode(true);
+                      setQuizCompleted(false);
+                      setHasViewedAnswers(true); // Butonun tekrar gösterilmemesi için işaretle
+                    } else {
+                      // Hiç yanlış cevap yoksa
+                      alert('Tebrikler! Hiç yanlış cevabınız yok.');
+                      setHasViewedAnswers(true); // Bu durumda da buton gizlensin
+                    }
+                  }}
+                >
+                  <Text style={styles.viewAnswersButtonText}>Cevapları Kontrol Edin</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
           {/* Home ve Exit ikonları */}
@@ -335,21 +385,80 @@ export default function App() {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.exitButtonMini}
-              onPress={() => BackHandler.exitApp()}
+              onPress={() => setShowExitAppModal(true)}
             >
               <Ionicons name="exit-outline" size={26} color="#fff" />
             </TouchableOpacity>
           </View>
+          
+          {/* Uygulamayı kapatma modalı - sonuç sayfasında da göster */}
+          <Modal
+            visible={showExitAppModal}
+            transparent
+            animationType="fade"
+            onRequestClose={() => setShowExitAppModal(false)}
+          >
+            <View style={styles.endExamModalOverlay}>
+              <View style={styles.endExamModalContent}>
+                <Text style={styles.endExamModalTitle}>Uygulamayı kapatmak istiyor musunuz?</Text>
+                <View style={styles.endExamModalButtons}>
+                  <TouchableOpacity
+                    style={styles.endExamModalButtonYes}
+                    onPress={() => {
+                      setShowExitAppModal(false);
+                      // Uygulamayı tamamen sıfırla
+                      setShowSplash(true);
+                      setShowInfo(false);
+                      setCurrentQuestionIndex(0);
+                      setSelectedAnswer(null);
+                      setShowResult(false);
+                      setScore(0);
+                      setAnsweredQuestions(0);
+                      setQuizCompleted(false);
+                      setShuffledQuestions([]);
+                      setTimer(2400); // 40 dakika
+                      setTimeUp(false);
+                      setAnswers([]);
+                      setUserAnswers([]);
+                      clearInterval(timerRef.current);
+                      // Uygulamayı kapat
+                      BackHandler.exitApp();
+                    }}
+                  >
+                    <Text style={styles.endExamModalButtonTextYes}>Evet</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.endExamModalButtonNo}
+                    onPress={() => setShowExitAppModal(false)}
+                  >
+                    <Text style={styles.endExamModalButtonTextNo}>Hayır</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </SafeAreaView>
       </View>
     );
   }
 
   // Test ekranı (sorular karışık ve sayaç var)
-  const activeQuestions = shuffledQuestions.length > 0 ? shuffledQuestions : questions;
-  const activeCurrentQuestion = activeQuestions[currentQuestionIndex];
+  const activeQuestions = shuffledQuestions.length > 0 ? shuffledQuestions : getRandomQuestions();
+  
+  // Review mode için aktif soru belirleme
+  let activeCurrentQuestion;
+  let displayQuestionNumber;
+  
+  if (isReviewMode && wrongQuestions.length > 0) {
+    const wrongQuestionOriginalIndex = wrongQuestions[reviewQuestionIndex];
+    activeCurrentQuestion = activeQuestions[wrongQuestionOriginalIndex];
+    displayQuestionNumber = wrongQuestionOriginalIndex + 1;
+  } else {
+    activeCurrentQuestion = activeQuestions[currentQuestionIndex];
+    displayQuestionNumber = currentQuestionIndex + 1;
+  }
 
-  // Sayaç formatı
+  // Sayaç formatı (40 dakika için)
   const minutes = String(Math.floor(timer / 60)).padStart(2, '0');
   const seconds = String(timer % 60).padStart(2, '0');
 
@@ -420,17 +529,21 @@ export default function App() {
     setShowSplash(true);
     setShowInfo(false);
     setShuffledQuestions([]);
-    setTimer(300);
+    setTimer(2400); // 40 dakika
     setTimeUp(false);
     setAnswers([]); // cevap geçmişini sıfırla
     setUserAnswers([]); // kullanıcı cevaplarını sıfırla
+    setIsReviewMode(false); // review mode'u sıfırla
+    setWrongQuestions([]);
+    setReviewQuestionIndex(0);
+    setHasViewedAnswers(false); // Yeni quiz için sıfırla
     clearInterval(timerRef.current);
   }
 
   function getScoreColor() {
-    const percentage = (score / (shuffledQuestions.length || questions.length)) * 100;
-    if (percentage >= 80) return '#4CAF50';
-    if (percentage >= 60) return '#FF9800';
+    const percentage = (score / (shuffledQuestions.length || 40)) * 100;
+    if (percentage >= 85) return '#4CAF50';
+    if (percentage >= 70) return '#FF9800';
     return '#F44336';
   }
 
@@ -440,35 +553,43 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <SafeAreaView style={styles.safeArea}>
-          {/* Sayaç sağ üst köşe */}
-          <View style={[styles.timerContainerLowerBlue, { top: 180 }]}>
-            <Ionicons
-              name="time-outline"
-              size={22}
-              color={timer <= 60 ? (blink ? "#F44336" : "#fff") : "#fff"}
-            />
-            <Text
-              style={[
-                styles.timerTextWhite,
-                timer <= 60 && {
-                  color: blink ? "#F44336" : "#fff",
-                  fontWeight: 'bold',
-                  textShadowColor: blink ? "#F44336" : "#fff",
-                  textShadowOffset: { width: 0, height: 0 },
-                  textShadowRadius: blink ? 10 : 0,
-                }
-              ]}
-            >
-              {minutes}:{seconds}
-            </Text>
-          </View>
+          {/* Sayaç sağ üst köşe - sadece normal modda göster */}
+          {!isReviewMode && (
+            <View style={[styles.timerContainerLowerBlue, { top: 180 }]}>
+              <Ionicons
+                name="time-outline"
+                size={22}
+                color={timer <= 60 ? (blink ? "#F44336" : "#fff") : "#fff"}
+              />
+              <Text
+                style={[
+                  styles.timerTextWhite,
+                  timer <= 60 && {
+                    color: blink ? "#F44336" : "#fff",
+                    fontWeight: 'bold',
+                    textShadowColor: blink ? "#F44336" : "#fff",
+                    textShadowOffset: { width: 0, height: 0 },
+                    textShadowRadius: blink ? 10 : 0,
+                  }
+                ]}
+              >
+                {minutes}:{seconds}
+              </Text>
+            </View>
+          )}
+          
           {/* Home ve Exit ikonları sağ/sol alt köşede */}
           <View style={styles.examFooterAbsolute}>
             <TouchableOpacity
               style={styles.homeButtonMini}
               onPress={() => {
-                setPendingEndAction('home');
-                setShowEndExamModal(true);
+                if (isReviewMode) {
+                  // Review mode'dayken direkt ana sayfaya dön
+                  resetQuiz();
+                } else {
+                  setPendingEndAction('home');
+                  setShowEndExamModal(true);
+                }
               }}
             >
               <Ionicons name="home" size={26} color="#1976D2" />
@@ -482,11 +603,15 @@ export default function App() {
               <Ionicons name="exit-outline" size={26} color="#fff" />
             </TouchableOpacity>
           </View>
+          
           {/* Başlık */}
           <View style={styles.headerSmallWithMargin}>
             <View style={{ height: 4 }} />
-            <Text style={styles.titleBig3D}>İlkyardım Soru Bankası</Text>
+            <Text style={styles.titleBig3D}>
+              {isReviewMode ? 'Yanlış Cevaplar' : 'İlkyardım Soru Bankası'}
+            </Text>
           </View>
+          
           <ScrollView
             style={styles.scrollViewSmall}
             contentContainerStyle={styles.scrollViewSmallContentCenter}
@@ -503,65 +628,149 @@ export default function App() {
               }}
             >
               <Text style={styles.questionNumberBig3DWhite}>
-                Soru {currentQuestionIndex + 1}/{activeQuestions.length}
+                {isReviewMode 
+                  ? `Yanlış Soru ${reviewQuestionIndex + 1}/${wrongQuestions.length} (Orijinal Soru ${displayQuestionNumber})`
+                  : `Soru ${displayQuestionNumber}/${activeQuestions.length}`
+                }
               </Text>
               <Text style={styles.questionTextWhite}>{activeCurrentQuestion.question}</Text>
+              
               <View style={styles.optionsContainerSmall}>
-                {activeCurrentQuestion.options.map((option, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={[
-                      styles.optionButtonLargeGray,
-                      selectedAnswer === index && styles.selectedOptionOrange,
-                    ]}
-                    onPress={() => handleAnswerSelect(index)}
-                    activeOpacity={0.8}
-                  >
-                    <Text
+                {activeCurrentQuestion.options.map((option, index) => {
+                  const isLongText = option.length > 40;
+                  const isVeryLongText = option.length > 80;
+                  const isExtremelyLongText = option.length > 120;
+                  
+                  // Review mode'da renk belirleme
+                  let buttonStyle = styles.optionButtonLargeGray;
+                  if (isReviewMode) {
+                    const wrongQuestionOriginalIndex = wrongQuestions[reviewQuestionIndex];
+                    const userAnswer = userAnswers[wrongQuestionOriginalIndex];
+                    const correctAnswer = activeCurrentQuestion.correctAnswer;
+                    
+                    if (index === correctAnswer) {
+                      // Doğru cevap - yeşil
+                      buttonStyle = styles.correctOptionReview;
+                    } else if (index === userAnswer) {
+                      // Kullanıcının yanlış cevabı - kırmızı
+                      buttonStyle = styles.wrongOptionReview;
+                    }
+                  } else if (selectedAnswer === index) {
+                    buttonStyle = styles.selectedOptionOrange;
+                  }
+                  
+                  return (
+                    <TouchableOpacity
+                      key={index}
                       style={[
-                        styles.optionTextLargeGray,
-                        selectedAnswer === index && styles.selectedOptionTextSmall
+                        styles.optionButtonLargeGray,
+                        buttonStyle === styles.selectedOptionOrange && styles.selectedOptionOrange,
+                        buttonStyle === styles.correctOptionReview && styles.correctOptionReview,
+                        buttonStyle === styles.wrongOptionReview && styles.wrongOptionReview,
+                        isExtremelyLongText && { minHeight: 42, paddingVertical: 10 },
+                        isVeryLongText && !isExtremelyLongText && { minHeight: 38, paddingVertical: 9 }
                       ]}
-                      numberOfLines={2}
-                      ellipsizeMode="tail"
+                      onPress={() => {
+                        if (!isReviewMode) {
+                          handleAnswerSelect(index);
+                        }
+                      }}
+                      activeOpacity={isReviewMode ? 1 : 0.8}
+                      disabled={isReviewMode}
                     >
-                      {String.fromCharCode(65 + index)}. {option}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              {/* Önceki/Sonraki Soru butonları - her zaman görünür */}
-              <View style={styles.resultContainerSmallRow}>
-                {currentQuestionIndex > 0 ? (
-                  <View style={styles.prevButtonSmallLeftWrapper}>
-                    <TouchableOpacity style={styles.prevButtonSmallYellow} onPress={() => {
-                      setCurrentQuestionIndex(currentQuestionIndex - 1);
-                      // Önceki sorunun cevabını kontrol et ve göster
-                      const previousAnswer = userAnswers[currentQuestionIndex - 1];
-                      if (previousAnswer !== undefined) {
-                        setSelectedAnswer(previousAnswer);
-                        setShowResult(true);
-                      } else {
-                        setSelectedAnswer(null);
-                        setShowResult(false);
-                      }
-                    }}>
-                      <Ionicons name="arrow-back" size={15} color="#fff" />
-                      <Text style={styles.prevButtonTextSmallWhite}>Önceki Soru</Text>
+                      <Text
+                        style={[
+                          styles.optionTextLargeGray,
+                          isReviewMode && index === activeCurrentQuestion.correctAnswer && styles.correctOptionTextReview,
+                          isReviewMode && index === userAnswers[wrongQuestions[reviewQuestionIndex]] && styles.wrongOptionTextReview,
+                          !isReviewMode && selectedAnswer === index && styles.selectedOptionTextSmall,
+                          isVeryLongText && { fontSize: 8, lineHeight: 11 },
+                          isLongText && !isVeryLongText && { fontSize: 9, lineHeight: 12 }
+                        ]}
+                        numberOfLines={2}
+                        ellipsizeMode="tail"
+                      >
+                        {String.fromCharCode(65 + index)}. {option}
+                      </Text>
                     </TouchableOpacity>
-                  </View>
+                  );
+                })}
+              </View>
+              
+              {/* Butonlar */}
+              <View style={styles.resultContainerSmallRow}>
+                {isReviewMode ? (
+                  // Review mode butonları
+                  <>
+                    <View style={styles.prevButtonSmallLeftWrapper}>
+                      {reviewQuestionIndex > 0 && (
+                        <TouchableOpacity 
+                          style={styles.prevButtonSmallYellow} 
+                          onPress={() => setReviewQuestionIndex(reviewQuestionIndex - 1)}
+                        >
+                          <Ionicons name="arrow-back" size={15} color="#fff" />
+                          <Text style={styles.prevButtonTextSmallWhite}>Önceki Yanlış</Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                    
+                    <View style={styles.nextButtonSmallRightWrapper}>
+                      {reviewQuestionIndex < wrongQuestions.length - 1 ? (
+                        <TouchableOpacity 
+                          style={styles.nextButtonSmall} 
+                          onPress={() => setReviewQuestionIndex(reviewQuestionIndex + 1)}
+                        >
+                          <Text style={styles.nextButtonTextSmall}>Sonraki Yanlış</Text>
+                          <Ionicons name="arrow-forward" size={15} color="#fff" />
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity 
+                          style={styles.finishReviewButton} 
+                          onPress={() => {
+                            setIsReviewMode(false);
+                            setQuizCompleted(true);
+                          }}
+                        >
+                          <Text style={styles.finishReviewButtonText}>İncelemeyi Bitir</Text>
+                          <Ionicons name="checkmark" size={15} color="#fff" />
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  </>
                 ) : (
-                  <View style={styles.prevButtonSmallLeftWrapper} />
+                  // Normal mode butonları
+                  <>
+                    {currentQuestionIndex > 0 ? (
+                      <View style={styles.prevButtonSmallLeftWrapper}>
+                        <TouchableOpacity style={styles.prevButtonSmallYellow} onPress={() => {
+                          setCurrentQuestionIndex(currentQuestionIndex - 1);
+                          const previousAnswer = userAnswers[currentQuestionIndex - 1];
+                          if (previousAnswer !== undefined) {
+                            setSelectedAnswer(previousAnswer);
+                            setShowResult(true);
+                          } else {
+                            setSelectedAnswer(null);
+                            setShowResult(false);
+                          }
+                        }}>
+                          <Ionicons name="arrow-back" size={15} color="#fff" />
+                          <Text style={styles.prevButtonTextSmallWhite}>Önceki Soru</Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <View style={styles.prevButtonSmallLeftWrapper} />
+                    )}
+                    
+                    <View style={styles.nextButtonSmallRightWrapper}>
+                      <TouchableOpacity style={styles.nextButtonSmall} onPress={handleNextQuestion}>
+                        <Text style={styles.nextButtonTextSmall}>
+                          {currentQuestionIndex < activeQuestions.length - 1 ? 'Sonraki Soru' : 'Sonuçları Görüntüle'}
+                        </Text>
+                        <Ionicons name="arrow-forward" size={15} color="#fff" />
+                      </TouchableOpacity>
+                    </View>
+                  </>
                 )}
-                
-                <View style={styles.nextButtonSmallRightWrapper}>
-                  <TouchableOpacity style={styles.nextButtonSmall} onPress={handleNextQuestion}>
-                    <Text style={styles.nextButtonTextSmall}>
-                      {currentQuestionIndex < activeQuestions.length - 1 ? 'Sonraki Soru' : 'Sonuçları Görüntüle'}
-                    </Text>
-                    <Ionicons name="arrow-forward" size={15} color="#fff" />
-                  </TouchableOpacity>
-                </View>
               </View>
             </View>
           </ScrollView>
@@ -609,12 +818,28 @@ export default function App() {
           >
             <View style={styles.endExamModalOverlay}>
               <View style={styles.endExamModalContent}>
-                <Text style={styles.endExamModalTitle}>Uygulamayı kapatmak istiyor musunuz?</Text>
+                <Text style={styles.endExamModalTitle}>Uygulamadan çıkmak istiyor musunuz?</Text>
                 <View style={styles.endExamModalButtons}>
                   <TouchableOpacity
                     style={styles.endExamModalButtonYes}
                     onPress={() => {
                       setShowExitAppModal(false);
+                      // Uygulamayı tamamen sıfırla
+                      setShowSplash(true);
+                      setShowInfo(false);
+                      setCurrentQuestionIndex(0);
+                      setSelectedAnswer(null);
+                      setShowResult(false);
+                      setScore(0);
+                      setAnsweredQuestions(0);
+                      setQuizCompleted(false);
+                      setShuffledQuestions([]);
+                      setTimer(2400); // 40 dakika
+                      setTimeUp(false);
+                      setAnswers([]);
+                      setUserAnswers([]);
+                      clearInterval(timerRef.current);
+                      // Uygulamayı kapat
                       BackHandler.exitApp();
                     }}
                   >
@@ -827,7 +1052,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 10,
+    paddingTop: 10,
   },
   resultCard: {
     backgroundColor: '#fff',
@@ -843,6 +1069,12 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
   },
+  resultCardTransparent: {
+    backgroundColor: 'transparent',
+    borderRadius: 20,
+    padding: 40,
+    alignItems: 'center',
+  },
   completedTitle: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -850,16 +1082,45 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
+  completedTitleWhite: {
+    fontSize: 34,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginTop: 0,
+    marginBottom: 10,
+    textShadowColor: '#333',
+    textShadowOffset: { width: 4, height: 2 },
+    textShadowRadius: 4,
+  },
   finalScore: {
     fontSize: 20,
     color: '#555',
     marginBottom: 10,
+  },
+  finalScoreWhite: {
+    fontSize: 38,
+    color: '#fff',
+    marginBottom: 10,
+    textShadowColor: '#333',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 6,
+    fontWeight: 'bold',
+  },
+  scoreDetailWhite: {
+    fontSize: 18,
+    color: '#fff',
+    marginBottom: 10,
+    textShadowColor: '#333',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    textAlign: 'left',
   },
   percentage: {
     fontSize: 48,
     fontWeight: 'bold',
     color: '#667eea',
     marginBottom: 30,
+  
   },
   restartButton: {
     backgroundColor: '#667eea',
@@ -868,10 +1129,37 @@ const styles = StyleSheet.create({
     minWidth: 150,
     alignItems: 'center',
   },
+  restartButtonSmall: {
+    backgroundColor: '#667eea',
+    padding: 8,
+    borderRadius: 8,
+    flex: 0.48,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   restartButtonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: '600',
+  },
+  restartButtonTextSmall: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  viewAnswersButton: {
+    backgroundColor: '#8B0000',
+    padding: 8,
+    borderRadius: 8,
+    flex: 0.48,
+    alignItems: 'center',
+  },
+  viewAnswersButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
+    textAlign: 'center',
   },
   // Splash (Giriş) ekranı stilleri
   splashContainer: {
@@ -1056,7 +1344,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 118, // 2 satır (2x24px+2x10px padding) yukarıya alındı
+    bottom: 108, // 118'den 108'e değiştirildi (10px aşağı)
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 24,
@@ -1066,7 +1354,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 118, // 2 satır (2x24px+2x10px padding) yukarıya alındı
+    bottom: 70, // 118'den 108'e değiştirildi (10px aşağı)
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 24,
@@ -1241,35 +1529,43 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     minWidth: 200,
-    maxWidth: 320,
-    width: '100%',
+    maxWidth: 380,
+    width: 'auto',
+    alignSelf: 'stretch',
     marginVertical: 0,
-    // Boyut sabit, seçilince değişmesin
-    transitionProperty: 'background-color,border-color',
-    transitionDuration: '0.2s',
-  },
-  selectedOptionGreen: {
-    backgroundColor: '#4CAF50',
-    borderColor: '#388e3c',
+    flexWrap: 'wrap',
+    minHeight: 35,
   },
   selectedOptionOrange: {
     backgroundColor: '#FF9800',
     borderColor: '#F57C00',
+    elevation: 8,
+    shadowColor: '#FF9800',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
   },
-  correctOptionSmall: {
-    backgroundColor: '#4CAF50',
+  correctOptionReview: {
+    backgroundColor: '#fff',
     borderColor: '#4CAF50',
+    borderWidth: 3,
+    elevation: 8,
+    shadowColor: '#4CAF50',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
   },
-  wrongOptionSmall: {
-    backgroundColor: '#F44336',
-    borderColor: '#F44336',
-  },
-  selectedOptionTextSmall: {
-    fontSize: 10,
-    color: '#fff',
-    fontWeight: '600',
+  wrongOptionReview: {
+    backgroundColor: '#ececec',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    elevation: 8,
+    shadowColor: '#F44336',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
   },
   optionTextLargeGray: {
     fontSize: 10,
@@ -1277,6 +1573,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     flex: 1,
     textAlign: 'left',
+    flexWrap: 'wrap',
+    lineHeight: 14,
   },
   resultContainerSmall: {
     marginTop: 8,
@@ -1305,7 +1603,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center', // ortala
+    justifyContent: 'center',
     gap: 4,
     minWidth: 140, // butonun genişliğini artırarak ortalamayı garanti altına al
   },
@@ -1469,8 +1767,10 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 10,
     marginTop: -120,
-    minWidth: 210,
-    maxWidth: 320,
+    minWidth: 280, // minimum genişliği artır
+    maxWidth: 400, // maksimum genişliği artır
+    width: '95%', // ekran genişliğinin %95'ini kullan
+    alignSelf: 'center', // ortala
     alignItems: 'flex-start',
   },
   
@@ -1497,5 +1797,86 @@ const styles = StyleSheet.create({
     textShadowColor: '#333',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
+  },
+  resultButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    marginTop: -10,
+  },
+  successTextWhiteModern: {
+    fontSize: 20,
+    fontWeight: '900',
+    marginBottom: 18,
+    marginTop: 6,
+    textAlign: 'center',
+    color: '#FFD700',
+    textShadowColor: '#FF6B35',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 8,
+    letterSpacing: 1.5,
+    lineHeight: 28,
+  },
+  congratsTextModern: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#FFD700',
+    textShadowColor: '#FF6B35',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4,
+    letterSpacing: 2,
+  },
+  failTextWhiteModern: {
+    fontSize: 20,
+    fontWeight: '900',
+    marginBottom: 8,
+    marginTop: 6,
+    textAlign: 'center',
+    color: '#FF6B6B',
+    textShadowColor: '#8B0000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 8,
+    letterSpacing: 1.2,
+    lineHeight: 26,
+  },
+  tryAgainTextModern: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFA500',
+    textShadowColor: '#FF4500',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4,
+    letterSpacing: 1.5,
+  },
+  selectedOptionTextSmall: {
+    fontSize: 10,
+    color: '#fff',
+    fontWeight: '600',
+  },
+  correctOptionTextReview: {
+    color: '#4CAF50',
+    fontWeight: 'bold',
+  },
+  wrongOptionTextReview: {
+    color: '#F44336',
+    fontWeight: 'bold',
+  },
+  finishReviewButton: {
+    backgroundColor: '#667eea',
+    padding: 7,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+    minWidth: 140,
+  },
+  finishReviewButtonText: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: '600',
+    textAlign: 'center',
+    flex: 1,
   },
 });
