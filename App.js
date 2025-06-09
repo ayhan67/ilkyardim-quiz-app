@@ -18,10 +18,32 @@ import { questionBank } from './questionBank';
 
 const { width, height } = Dimensions.get('window');
 
-// questionBank'ten rastgele soru seç (dinamik sayı)
+// questionBank'ten rastgele soru seç (dinamik sayı) ve şıkları karıştır
 const getRandomQuestions = (count = 40) => {
   const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+  const selectedQuestions = shuffled.slice(0, count);
+  
+  // Her soru için şıkları karıştır ve doğru cevabın yeni pozisyonunu bul
+  return selectedQuestions.map(question => {
+    const optionsWithIndex = question.options.map((option, index) => ({
+      option,
+      originalIndex: index
+    }));
+    
+    // Şıkları karıştır
+    const shuffledOptions = optionsWithIndex.sort(() => Math.random() - 0.5);
+    
+    // Yeni doğru cevap pozisyonunu bul
+    const newCorrectAnswer = shuffledOptions.findIndex(
+      item => item.originalIndex === question.correctAnswer
+    );
+    
+    return {
+      ...question,
+      options: shuffledOptions.map(item => item.option),
+      correctAnswer: newCorrectAnswer
+    };
+  });
 };
 
 export default function App() {
