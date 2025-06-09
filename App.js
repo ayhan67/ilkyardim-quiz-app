@@ -18,10 +18,10 @@ import { questionBank } from './questionBank';
 
 const { width, height } = Dimensions.get('window');
 
-// questionBank'ten rastgele 40 soru seç
-const getRandomQuestions = () => {
+// questionBank'ten rastgele soru seç (dinamik sayı)
+const getRandomQuestions = (count = 40) => {
   const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 40);
+  return shuffled.slice(0, count);
 };
 
 export default function App() {
@@ -33,6 +33,7 @@ export default function App() {
   // Diğer state'ler
   const [showSplash, setShowSplash] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
+  const [selectedQuestionCount, setSelectedQuestionCount] = useState(40); // Yeni state: soru sayısı seçimi
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
@@ -99,8 +100,26 @@ export default function App() {
   useEffect(() => {
     if (quizCompleted) {
       const totalQuestions = shuffledQuestions.length || 40;
-      const not = Math.round((score / totalQuestions) * 100);
-      const basarili = not >= 85; // 85 puan ve üzeri geçer
+      let passingScore;
+      
+      if (selectedQuestionCount === 10) {
+        passingScore = 80;
+      } else if (selectedQuestionCount === 20) {
+        passingScore = 85;
+      } else {
+        passingScore = 85;
+      }
+      
+      let not;
+      if (selectedQuestionCount === 10) {
+        not = Math.round((score * 10));
+      } else if (selectedQuestionCount === 20) {
+        not = Math.round((score * 5));
+      } else {
+        not = Math.round((score * 2.5));
+      }
+      
+      const basarili = not >= passingScore; // 85 puan ve üzeri geçer
       
       if (basarili) {
         const pulse = Animated.loop(
@@ -185,7 +204,7 @@ export default function App() {
         <StatusBar barStyle="light-content" />
         <SafeAreaView style={styles.safeArea}>
           {/* 3 satır boşluk bırak */}
-          <View style={{ height: 48 }} />
+          <View style={{ height: 40 }} />
           <View style={styles.infoContainer}>
             <Image
               source={require('./test.png')}
@@ -193,56 +212,85 @@ export default function App() {
               resizeMode="contain"
             />
             {/* 2 satır boşluk azaltıldı */}
-            <View style={{ height: 52 }} />
+            <View style={{ height: 25 }} />
             <Text style={styles.rulesTitle}>KURALLAR :</Text>
             <View style={styles.rulesList}>
-              <Text style={styles.rulesTextSingleLine}>1. Her soru 2,5 puandır.</Text>
-              <Text style={styles.rulesTextSingleLine}>2. Toplam 40 soru mevcuttur.</Text>
-              <Text style={styles.rulesTextSingleLine}>3. Süreniz 40 dakikadır.</Text>
+              <Text style={styles.rulesTextSingleLine}>1. Her soru {selectedQuestionCount === 10 ? '10' : selectedQuestionCount === 20 ? '5' : '2,5'} puandır.</Text>
+              <Text style={styles.rulesTextSingleLine}>2. Toplam {selectedQuestionCount} soru mevcuttur.</Text>
+              <Text style={styles.rulesTextSingleLine}>3. Süreniz {selectedQuestionCount} dakikadır.</Text>
               <Text style={styles.rulesTextSingleLine}>4. Doğru yanlışı götürmez.</Text>
-              <Text style={styles.rulesTextSingleLine}>5. Geçme notu 85 puandır.</Text>
+              <Text style={styles.rulesTextSingleLine}>5. Geçme notu {selectedQuestionCount === 10 ? '80' : '85'} puandır.</Text>
             </View>
-            <TouchableOpacity
-              style={styles.startExamButton}
-              onPress={() => {
-                // Rastgele 40 soru seç
-                const randomQuestions = getRandomQuestions();
-                setShuffledQuestions(randomQuestions);
-                setCurrentQuestionIndex(0);
-                setScore(0);
-                setSelectedAnswer(null);
-                setShowResult(false);
-                setAnsweredQuestions(0);
-                setQuizCompleted(false);
-                setTimeUp(false);
-                setTimer(2400); // 40 dakika
-                setAnswers([]);
-                setUserAnswers([]);
-                setShowInfo(true);
-              }}
-            >
-              <Text style={styles.startExamButtonText}>Teste Başla</Text>
-            </TouchableOpacity>
+            
+            {/* Soru sayısı seçimi ve teste başla butonları */}
+            <View style={styles.examOptionsContainer}>
+              <View style={styles.questionCountSelector}>
+                <Text style={styles.questionCountTitle}>Test Soru Sayısı Seç:</Text>
+                <View style={styles.questionCountOptions}>
+                  <TouchableOpacity
+                    style={[
+                      styles.questionCountOption,
+                      selectedQuestionCount === 10 && styles.questionCountOptionSelected
+                    ]}
+                    onPress={() => setSelectedQuestionCount(10)}
+                  >
+                    <Text style={[
+                      styles.questionCountOptionText,
+                      selectedQuestionCount === 10 && styles.questionCountOptionTextSelected
+                    ]}>10 Soru</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[
+                      styles.questionCountOption,
+                      selectedQuestionCount === 20 && styles.questionCountOptionSelected
+                    ]}
+                    onPress={() => setSelectedQuestionCount(20)}
+                  >
+                    <Text style={[
+                      styles.questionCountOptionText,
+                      selectedQuestionCount === 20 && styles.questionCountOptionTextSelected
+                    ]}>20 Soru</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[
+                      styles.questionCountOption,
+                      selectedQuestionCount === 40 && styles.questionCountOptionSelected
+                    ]}
+                    onPress={() => setSelectedQuestionCount(40)}
+                  >
+                    <Text style={[
+                      styles.questionCountOptionText,
+                      selectedQuestionCount === 40 && styles.questionCountOptionTextSelected
+                    ]}>40 Soru (Orjinal)</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              
+              <TouchableOpacity
+                style={styles.startExamButtonSmall}
+                onPress={() => {
+                  // Seçilen sayıda rastgele soru seç
+                  const randomQuestions = getRandomQuestions(selectedQuestionCount);
+                  setShuffledQuestions(randomQuestions);
+                  setCurrentQuestionIndex(0);
+                  setScore(0);
+                  setSelectedAnswer(null);
+                  setShowResult(false);
+                  setAnsweredQuestions(0);
+                  setQuizCompleted(false);
+                  setTimeUp(false);
+                  setTimer(selectedQuestionCount * 60); // Her soru için 1 dakika
+                  setAnswers([]);
+                  setUserAnswers([]);
+                  setShowInfo(true);
+                }}
+              >
+                <Text style={styles.startExamButtonTextSmall}>Teste Başla</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.infoFooterAbsolute}>
-            <TouchableOpacity
-              style={styles.homeButtonMini}
-              onPress={() => {
-                // Sınavda değilken direkt ana sayfaya dön
-                setShowSplash(true);
-                setShowInfo(false);
-              }}
-            >
-              <Ionicons name="home" size={26} color="#1976D2" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.exitButtonMini}
-              onPress={() => {
-                BackHandler.exitApp();
-              }}
-            >
-              <Ionicons name="exit-outline" size={26} color="#fff" />
-            </TouchableOpacity>
+          <View style={styles.splashFooter}>
+            <Text style={styles.splashFooterText}>Her hakkı saklıdır. 2025</Text>
           </View>
         </SafeAreaView>
       </View>
@@ -289,10 +337,23 @@ export default function App() {
 
   // Test tamamlandıysa
   if (quizCompleted) {
-    // Notu 100 üzerinden hesapla (her doğru cevap 2,5 puan)
+    // Notu 100 üzerinden hesapla (soru sayısına göre farklı puanlama)
     const totalQuestions = shuffledQuestions.length || 40;
-    const not = Math.round((score * 2.5));
-    const basarili = not >= 85; // 85 puan ve üzeri geçer
+    let not;
+    let passingScore;
+    
+    if (selectedQuestionCount === 10) {
+      not = Math.round(score * 10);
+      passingScore = 80;
+    } else if (selectedQuestionCount === 20) {
+      not = Math.round(score * 5);
+      passingScore = 85;
+    } else {
+      not = Math.round(score * 2.5);
+      passingScore = 85;
+    }
+    
+    const basarili = not >= passingScore; // 85 puan ve üzeri geçer
     const dogruSayisi = answers.filter(Boolean).length;
     const yanlisSayisi = totalQuestions - dogruSayisi;
 
@@ -537,6 +598,7 @@ export default function App() {
     setWrongQuestions([]);
     setReviewQuestionIndex(0);
     setHasViewedAnswers(false); // Yeni quiz için sıfırla
+    setSelectedQuestionCount(40); // Soru sayısını sıfırla
     clearInterval(timerRef.current);
   }
 
@@ -824,22 +886,6 @@ export default function App() {
                     style={styles.endExamModalButtonYes}
                     onPress={() => {
                       setShowExitAppModal(false);
-                      // Uygulamayı tamamen sıfırla
-                      setShowSplash(true);
-                      setShowInfo(false);
-                      setCurrentQuestionIndex(0);
-                      setSelectedAnswer(null);
-                      setShowResult(false);
-                      setScore(0);
-                      setAnsweredQuestions(0);
-                      setQuizCompleted(false);
-                      setShuffledQuestions([]);
-                      setTimer(2400); // 40 dakika
-                      setTimeUp(false);
-                      setAnswers([]);
-                      setUserAnswers([]);
-                      clearInterval(timerRef.current);
-                      // Uygulamayı kapat
                       BackHandler.exitApp();
                     }}
                   >
@@ -1284,6 +1330,70 @@ const styles = StyleSheet.create({
   startExamButtonText: {
     color: '#fff',
     fontSize: 18,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
+  examOptionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    width: '100%',
+    gap: 20,
+  },
+  questionCountSelector: {
+    flex: 1,
+  },
+  questionCountTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#1976D2',
+    marginBottom: 15,
+    textAlign: 'left',
+    marginLeft: 18,
+    textShadowColor: '#333',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  questionCountOptions: {
+    gap: 6,
+  },
+  questionCountOption: {
+    backgroundColor: '#fff',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1976D2',
+    alignItems: 'center',
+  },
+  questionCountOptionSelected: {
+    backgroundColor: '#1976D2',
+  },
+  questionCountOptionText: {
+    color: '#1976D2',
+    fontSize: 9,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  questionCountOptionTextSelected: {
+    color: '#fff',
+  },
+  startExamButtonSmall: {
+    backgroundColor: '#1976D2',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.18,
+    shadowRadius: 4,
+    alignItems: 'center',
+    minWidth: 100,
+  },
+  startExamButtonTextSmall: {
+    color: '#fff',
+    fontSize: 14,
     fontWeight: 'bold',
     letterSpacing: 1,
   },
