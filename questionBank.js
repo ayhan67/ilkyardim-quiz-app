@@ -527,7 +527,7 @@ export const questionBank = [
   },
   {
     id: 44,
-    question: "Denizanası sokması durumunda ilk yardım nasıl uygulanır?",
+    question: "Denizanası teması durumunda ilk yardım nasıl uygulanır?",
     options: [
       "Sokulan bölge hemen soğuk su ile yıkanır",
       "Dokunganlar elle çıkarılmaya çalışılır",
@@ -536,13 +536,625 @@ export const questionBank = [
     ],
     correctAnswer: 2,
     explanation: "Denizanası sokmasında kredi kartı, plastik kart gibi sert bir nesne ile dokunganlar ciltten kazınarak çıkarılmalıdır. Elle dokunmak daha fazla zehir salınmasına neden olur. Sonrasında sıcak su (43-45°C) uygulanabilir."
+  },
+  {
+    id: 45,
+    question: "İlkyardım Nedir?",
+    options: [
+      "Olay yerinde ilaç vererek yapılan müdahaledir",
+      "Hastanedeki hekimler tarafından yapılan ilk müdahaledir",
+      "Olay yerinde, tıbbi araç ve gereç aranmaksızın mevcut imkânlarla yapılan ilaçsız müdahaledir",
+      "Ambulansta doktor tarafından yapılan müdahaledir"
+    ],
+    correctAnswer: 2,
+    explanation: "İlkyardım, olay yerinde tıbbi araç ve gereç aranmaksızın mevcut imkânlarla yapılan ilaçsız müdahaledir. Amacı yaşamı korumak, durumun kötüleşmesini önlemek ve tıbbi yardım gelene kadar hastayı stabilize etmektir."
+  },
+  {
+    id: 46,
+    question: "Olay yerinde, hayatın kurtarılması ya da hastanın durumunun daha da kötüleşmesini engellemek amacıyla ilaçsız olarak yapılan müdahaleye ne isim verilir?",
+    options: [
+      "Acil tedavi",
+      "İlkyardım",
+      "Acil müdahale",
+      "Temel yaşam desteği"
+    ],
+    correctAnswer: 1,
+    explanation: "İlkyardım, olay yerinde hayatın kurtarılması veya hastanın durumunun kötüleşmesini engellemek amacıyla, tıbbi araç-gereç kullanmadan ve ilaçsız olarak yapılan müdahaledir."
+  },
+  {
+    id: 47,
+    question: "Hangisi ilkyardımın öncelikli amaçlarındandır?",
+    options: [
+      "Hayati tehlikeyi ortadan kaldırmak",
+      "İyileşmeyi kolaylaştırmak, Kazazedenin durumunun kötüleşmesini önlemek",
+      "Yaşamsal fonksiyonların sürdürülmesini sağlamak",
+      "Hepsi doğru"
+    ],
+    correctAnswer: 3,
+    explanation: "İlkyardımın temel amaçları; hayati tehlikeyi ortadan kaldırmak, iyileşmeyi kolaylaştırmak, kazazedenin durumunun kötüleşmesini önlemek ve yaşamsal fonksiyonların sürdürülmesini sağlamaktır. Bu seçeneklerin hepsi ilkyardımın öncelikli amaçlarıdır."
+  },
+  {
+    id: 48,
+    question: "Türkiye'de hastanın en yakın sağlık kuruluşuna sevkini sağlamak amacıyla hangi telefon numarası aranmalıdır?",
+    options: [
+      "110",
+      "155",
+      "114",
+      "112"
+    ],
+    correctAnswer: 3,
+    explanation: "Türkiye'de acil sağlık hizmetleri için 112 numarası aranır. Bu numara 7/24 hizmet verir ve hastanın en yakın sağlık kuruluşuna sevkini sağlar. 110 polis, 155 jandarma, 114 yangın söndürme numaralarıdır."
+  },
+  {
+    id: 49,
+    question: "Aşağıdakilerden hangisi ilkyardımın öncelikli amaçları arasında değildir?",
+    options: [
+      "Hayati tehlikeyi ortadan kaldırmak",
+      "İyileşmeyi kolaylaştırmak",
+      "Yaşamsal fonksiyonların sürdürülmesini sağlamak",
+      "İlaç vererek tedavi etmek"
+    ],
+    correctAnswer: 3,
+    explanation: "İlaç vererek tedavi etmek ilkyardımın amacı değildir. İlkyardım ilaçsız müdahaledir. İlkyardımın temel amaçları; hayati tehlikeyi ortadan kaldırmak, iyileşmeyi kolaylaştırmak ve yaşamsal fonksiyonların sürdürülmesini sağlamaktır."
+  },
+  {
+    id: 50,
+    question: "Yetişkin bir insanda dakikadaki normal nabız sayısı kaçtır?",
+    options: [
+      "50-80 arası",
+      "60-100 arası",
+      "110-130 arası",
+      "60-150 arası"
+    ],
+    correctAnswer: 1,
+    explanation: "Yetişkin bir insanda dakikadaki normal nabız sayısı 60-100 arasıdır. 60'ın altında bradikardi, 100'ün üzerinde taşikardi olarak değerlendirilir. Bu değerler dinlenme halindeki nabız değerleridir."
+  },
+  {
+    id: 51,
+    question: "Hangisi dolaşım sistemini oluşturan organlardan birisidir?",
+    options: [
+      "Bağırsak",
+      "Kalp",
+      "Akciğerler",
+      "Kaslar"
+    ],
+    correctAnswer: 1,
+    explanation: "Kalp dolaşım sisteminin ana organıdır. Dolaşım sistemi kalp, kan damarları (atardamar, toplardamar, kılcal damarlar) ve kandan oluşur. Kalp kanı vücuda pompalayan merkezi organdır."
+  },
+  {
+    id: 52,
+    question: "Hangisi solunum sistemini oluşturan organlardan birisidir?",
+    options: [
+      "Kalp",
+      "Beyin",
+      "Akciğerler",
+      "Kemikler"
+    ],
+    correctAnswer: 2,
+    explanation: "Akciğerler solunum sisteminin ana organıdır. Solunum sistemi burun, ağız, yutak, gırtlak, soluk borusu, bronşlar ve akciğerlerden oluşur. Akciğerler gaz değişiminin gerçekleştiği organlardır."
+  },
+  {
+    id: 53,
+    question: "Vücuda gerekli olan gaz alışverişi görevini yaparak hücre ve dokuların oksijenlenmesini sağlayan vücut sistemi hangisidir?",
+    options: [
+      "Hareket sistemi",
+      "Boşaltım sistemi",
+      "Sindirim sistemi",
+      "Solunum sistemi"
+    ],
+    correctAnswer: 3,
+    explanation: "Solunum sistemi vücuda gerekli olan gaz alışverişi görevini yapar. Oksijeni alarak karbondioksiti dışarı verir, böylece hücre ve dokuların oksijenlenmesini sağlar. Bu yaşamsal fonksiyon için kritik öneme sahiptir."
+  },
+  {
+    id: 54,
+    question: "Erişkin bir insanın dakikadaki solunum sayısı normalde ne kadardır?",
+    options: [
+      "12 – 20",
+      "8 – 10",
+      "20 – 25",
+      "2 – 30"
+    ],
+    correctAnswer: 0,
+    explanation: "Erişkin bir insanın dakikadaki normal solunum sayısı 12-20 arasıdır. Bu değerler dinlenme halindeki solunum sayısıdır. 12'nin altında bradipne, 20'nin üzerinde takipne olarak değerlendirilir."
+  },
+  {
+    id: 55,
+    question: "Bir insanın normal vücut ısısı koltuk altından ölçüldüğünde ne kadardır?",
+    options: [
+      "35°C",
+      "36.5°C",
+      "38°C",
+      "38.5°C"
+    ],
+    correctAnswer: 1,
+    explanation: "Normal vücut ısısı koltuk altından ölçüldüğünde 36.5°C'dir. Ağızdan ölçümde 37°C, rektal ölçümde ise 37.5°C normal kabul edilir. 38°C ve üzeri ateş olarak değerlendirilir."
+  },
+  {
+    id: 56,
+    question: "Kaza yapmış bir aracın yanına gelindiğinde ilk olarak aşağıdakilerden hangisi yapılır?",
+    options: [
+      "Çekilmişse el freni indirilmeli",
+      "Hasta/yaralı hemen araçtan çıkarılmalı",
+      "Aracın kontağı kapatılmalı",
+      "Hemen 110 aranmalı"
+    ],
+    correctAnswer: 2,
+    explanation: "Kaza yapmış bir aracın yanına gelindiğinde ilk olarak aracın kontağı kapatılmalıdır. Bu, yangın ve elektrik çarpması riskini azaltır. Daha sonra güvenlik sağlanarak yaralılara müdahale edilir."
+  },
+  {
+    id: 57,
+    question: "Hangisi olay yerinin değerlendirilmesi sırasında yapılması gereken işlerdendir?",
+    options: [
+      "Meraklı kişiler olay yerinden uzaklaştırılmalıdır",
+      "Kazaya uğrayan araç mümkünse güvenli bir yere alınmalıdır",
+      "Olay yeri yeterince görünebilir şekilde işaretlenmelidir",
+      "Hepsi doğru"
+    ],
+    correctAnswer: 3,
+    explanation: "Olay yeri değerlendirilmesi sırasında meraklı kişilerin uzaklaştırılması, aracın güvenli yere alınması ve olay yerinin görünür şekilde işaretlenmesi gibi tüm güvenlik önlemleri alınmalıdır. Bu işlemler hem yaralıların hem de ilk yardımcıların güvenliği için kritiktir."
+  },
+  {
+    id: 58,
+    question: "Hasta yaralının değerlendirilmesinde hangi işlemler yapılmalıdır?",
+    options: [
+      "Çevre güvenliği sağlanır",
+      "Bilinç kontrolü yapılır",
+      "İlkyardımın ABC si değerlendirilir",
+      "Hepsi doğru"
+    ],
+    correctAnswer: 3,
+    explanation: "Hasta/yaralının değerlendirilmesinde önce çevre güvenliği sağlanır, sonra bilinç kontrolü yapılır ve ardından ilkyardımın ABC'si (Airway-Solunum yolu, Breathing-Solunum, Circulation-Dolaşım) değerlendirilir. Bu işlemlerin hepsi sistematik yaklaşımın kritik bileşenleridir."
+  },
+  {
+    id: 59,
+    question: "Aşağıdakilerden hangisi yaşam bulgularından değildir?",
+    options: [
+      "Bilinç",
+      "Solunum, dolaşım",
+      "Vücut ısısı",
+      "Boşaltım"
+    ],
+    correctAnswer: 3,
+    explanation: "Yaşam bulguları bilinç, solunum, dolaşım (nabız) ve vücut ısısından oluşur. Boşaltım yaşam bulguları arasında yer almaz. Bu bulgular hastanın yaşamsal durumunu değerlendirmek için kullanılır."
+  },
+  {
+    id: 60,
+    question: "Dış kalp masajı ve yapay solunuma ne zaman son verilir?",
+    options: [
+      "10 dakika yapıldıktan sonra",
+      "Sağlık ekibi gelince",
+      "30 dakika yapıldıktan sonra",
+      "5 tur yaptıktan sonra"
+    ],
+    correctAnswer: 1,
+    explanation: "Dış kalp masajı ve yapay solunum hasta kendiliğinden nefes alana kadar veya sağlık ekibi gelip müdahaleyi devralana kadar sürdürülmelidir. Belirli bir süre sınırı yoktur, yaşamsal bulguların geri dönmesi veya profesyonel yardımın gelmesi beklenir."
+  },
+  {
+    id: 61,
+    question: "Hava yolunda tam tıkanıklık olan bilinci açık bir hastaya ilkyardımda ne yapılmalıdır?",
+    options: [
+      "Karına bası uygulanır (Heimlich manevrası)",
+      "Kalp masajı yapılır",
+      "Hasta öksürtülür",
+      "Şok pozisyonu verilir"
+    ],
+    correctAnswer: 0,
+    explanation: "Hava yolunda tam tıkanıklık olan bilinci açık hastaya Heimlich manevrası (karına bası) uygulanır. Bu manevra ani basınç yaratarak tıkanan cismin çıkarılmasını sağlar. Kısmi tıkanıklıkta ise hasta öksürmeye teşvik edilir."
+  },
+  {
+    id: 62,
+    question: "Solunum yolu tam olarak tıkanmış bir kişide aşağıdakilerden hangisi görülür?",
+    options: [
+      "Öksürür",
+      "Derin nefes alır",
+      "Konuşamaz",
+      "Konuşabilir"
+    ],
+    correctAnswer: 2,
+    explanation: "Solunum yolu tam olarak tıkandığında kişi konuşamaz, nefes alamaz ve ses çıkaramaz. Kısmi tıkanıklıkta öksürür ve konuşabilir. Tam tıkanıklık yaşamı tehdit eden acil bir durumdur ve derhal Heimlich manevrası uygulanmalıdır."
+  },
+  {
+    id: 63,
+    question: "Yetişkinlerde yapılan dış kalp masajıyla ilgili yazılanlardan hangisi doğrudur?",
+    options: [
+      "Kalp masajı tek elle yapılır",
+      "Kalp masajı yapılırken hastaya uzak durulmalıdır",
+      "Göğse baskı uygulanırken kollar bükülmeden vücut ağırlığıyla baskı uygulanır",
+      "Kalp masajı göğüs kemiğinin altına uygulanır"
+    ],
+    correctAnswer: 2,
+    explanation: "Yetişkinlerde dış kalp masajı yapılırken kollar düz tutulur ve vücut ağırlığıyla baskı uygulanır. Bu, etkili ve yorucu olmayan bir teknik sağlar. Kalp masajı iki elle, göğüs kemiğinin alt yarısına uygulanır ve masaj sırasında hastaya yakın durulur."
+  },
+  {
+    id: 64,
+    question: "Baş çene pozisyonunun amacı nedir?",
+    options: [
+      "Kişiyi beslemek için",
+      "Kişiye su içirmek için",
+      "Solunum yolunu kapatarak soluk borusuna bir şey kaçmasını önlemek",
+      "Dil kökünün soluk borusunu kapatmasını önleyerek havayolunu açmak"
+    ],
+    correctAnswer: 3,
+    explanation: "Baş-çene pozisyonu (head tilt-chin lift), bilinç kaybı olan hastalarda dil kökünün soluk borusunu kapatmasını önlemek ve hava yolunu açmak için uygulanır. Bu pozisyon dilin arkaya düşmesini engeller ve etkili solunum sağlar."
+  },
+  {
+    id: 65,
+    question: "Ağız içi kontrolü ne zaman yapılır?",
+    options: [
+      "Bilinç kontrolünden önce",
+      "Baş çene pozisyonundan sonra",
+      "Bilinç kontrolünden sonra",
+      "İkinci değerlendirmeden önce"
+    ],
+    correctAnswer: 1,
+    explanation: "Ağız içi kontrolü baş-çene pozisyonu verildikten sonra yapılır. Önce bilinç kontrol edilir, sonra baş-çene pozisyonu verilir ve ardından ağız içi görünür yabancı cisimler için kontrol edilir. Bu sistematik yaklaşım hava yolu açıklığını sağlamak için kritiktir."
+  },
+  {
+    id: 66,
+    question: "Ağız içi kontrolü ne amaçla yapılır?",
+    options: [
+      "En son ne yediğini anlamak için",
+      "Dişlerini saymak için",
+      "Yaralının alkol alıp almadığını anlamak için",
+      "Ağız içinde bulunabilecek materyallerin solunum yolunu tıkamaması için"
+    ],
+    correctAnswer: 3,
+    explanation: "Ağız içi kontrolü, ağız içinde bulunabilecek yabancı cisimler, yiyecek artıkları, takma diş gibi materyallerin solunum yolunu tıkamaması için yapılır. Bu kontrol hava yolu açıklığını sağlamak ve etkili solunum için kritik öneme sahiptir."
+  },
+  {
+    id: 67,
+    question: "Yetişkinlerde Kalp basısı sırasında göğüs kafesi ne kadar çöktürülmelidir?",
+    options: [
+      "Göğüs kafesinin 1/2 si kadar",
+      "Göğüs kafesinin 1/3 ü kadar",
+      "Göğüs kafesinin 1/4 ü kadar",
+      "Göğüs kafesinin 1/5 i kadar"
+    ],
+    correctAnswer: 1,
+    explanation: "Yetişkinlerde kalp masajı sırasında göğüs kafesi 1/3'ü kadar (yaklaşık 5-6 cm) çöktürülmelidir. Bu derinlik etkili kalp masajı için gereklidir ve kalbin yeterince sıkıştırılmasını sağlar. Çok sığ veya çok derin basınç etkisizdir ve zararlı olabilir."
+  },
+  {
+    id: 68,
+    question: "Solunum yolu tam tıkanmış ve bilinci açık kişiye ne yapılır?",
+    options: [
+      "Öksürmeye teşvik edilir",
+      "Sırtına vurulur",
+      "Heimlich manevrası(Karına bası) uygulanır",
+      "Rentek Manevrası uygulanır"
+    ],
+    correctAnswer: 2,
+    explanation: "Solunum yolu tam tıkanmış ve bilinci açık kişiye Heimlich manevrası (karına bası) uygulanır. Bu manevra ani basınç yaratarak tıkanan cismin çıkarılmasını sağlar. Öksürmeye teşvik etmek kısmi tıkanıklıkta yapılır. Tam tıkanıklıkta kişi zaten öksüremez ve konuşamaz."
+  },
+  {
+    id: 69,
+    question: "Hangisi tam tıkanma belirtisi değildir?",
+    options: [
+      "Nefes alamaz",
+      "Acı çeker gibi elini boynuna götürür",
+      "Su içebilir",
+      "Konuşamaz, rengi morarmıştır"
+    ],
+    correctAnswer: 2,
+    explanation: "Su içebilmek tam tıkanma belirtisi değildir. Tam tıkanmada kişi nefes alamaz, konuşamaz, rengi morarır ve genellikle elini boynuna götürerek evrensel boğulma işareti yapar. Su içebiliyorsa bu kısmi tıkanma işaretidir çünkü hava yolu tamamen kapanmamıştır."
+  },
+  {
+    id: 70,
+    question: "Solunum yolu kısmi tıkanmış kişiye ne yapılır?",
+    options: [
+      "Öksürmeye teşvik edilir",
+      "Su verilir",
+      "Temel Yaşam Desteği uygulanır",
+      "Heimlich manevrası(Karına bası) uygulanır"
+    ],
+    correctAnswer: 0,
+    explanation: "Solunum yolu kısmi tıkanmış kişi öksürmeye teşvik edilir. Kısmi tıkanmada kişi hala öksürebilir ve konuşabilir, bu nedenle doğal öksürme refleksi ile yabancı cismin çıkarılması sağlanmaya çalışılır. Heimlich manevrası sadece tam tıkanmalarda uygulanır."
+  },
+  {
+    id: 71,
+    question: "Kanama çeşitleriyle ilgili verilenlerden hangisi yanlıştır?",
+    options: [
+      "Toplardamar kanaması sızıntı şeklinde akar",
+      "Atardamar kanaması sızıntı şeklinde akar",
+      "Atardamar kanaması kesik kesik ve fışkırır tarzda akar",
+      "Kılcal damar kanaması küçük kabarcıklar şeklinde görülür"
+    ],
+    correctAnswer: 1,
+    explanation: "Atardamar kanaması sızıntı şeklinde akmaz, bu yanlış bir ifadedir. Atardamar kanaması kalbin atışıyla kesik kesik ve fışkırır tarzda akar, kırmızı renklidir. Toplardamar kanaması sızıntı şeklinde akar ve koyu renklidir. Kılcal damar kanaması ise küçük kabarcıklar şeklinde görülür."
+  },
+  {
+    id: 72,
+    question: "Aşağıdakilerden hangisi atardamar kanamasının özelliğidir?",
+    options: [
+      "Kesik kesik akar",
+      "Sızıntı şeklinde akar",
+      "Koyu renklidir",
+      "Küçük kabarcıklar şeklindedir"
+    ],
+    correctAnswer: 0,
+    explanation: "Atardamar kanaması kesik kesik akar. Bu, kalbin atışıyla nabızla uyumlu şekilde fışkırır tarzda akan kanamanın karakteristik özelliğidir. Atardamar kanaması ayrıca kırmızı renklidir ve acil müdahale gerektirir. Sızıntı şeklinde akmak toplardamar kanamasının, küçük kabarcıklar şeklinde olmak ise kılcal damar kanamasının özelliğidir."
+  },
+  {
+    id: 73,
+    question: "İç kanamalarda ilkyardımda aşağıdakilerden hangisi yapılmaz?",
+    options: [
+      "Ağızdan sıvı verilerek kayıp önlenir",
+      "Şok pozisyonu verilir, Üzeri örtülerek sıcak tutulur",
+      "Yaşamsal bulguları incelenir",
+      "Hareket ettirilmez"
+    ],
+    correctAnswer: 0,
+    explanation: "İç kanamalarda ağızdan sıvı verilmez. Bu, kusma riskini artırabilir ve durumu kötüleştirebilir. İç kanamalarda şok pozisyonu verilir, hasta sıcak tutulur, yaşamsal bulgular takip edilir ve hasta hareket ettirilmez. Acil tıbbi yardım için 112 aranmalıdır."
+  },
+  {
+    id: 74,
+    question: "Damar bütünlüğünün bozulması sonucu kanın damar dışına doğru akmasına ne isim verilir?",
+    options: [
+      "Kanama",
+      "Kırık",
+      "Çıkık",
+      "Burkulma"
+    ],
+    correctAnswer: 0,
+    explanation: "Damar bütünlüğünün bozulması sonucu kanın damar dışına doğru akmasına kanama denir. Kırık kemik dokusunda, çıkık eklem yerinden çıkmasında, burkulma ise bağ yaralanmasında görülür. Kanama atardamar, toplardamar veya kılcal damar yaralanması sonucu oluşabilir."
+  },
+  {
+    id: 75,
+    question: "Hangi durumda turnike uygulanabilir?",
+    options: [
+      "Kanaması olan her hastada",
+      "Çok sayıda kanamalı yaralının bulunduğu bir ortamda tek ilkyardımcı varsa",
+      "Baş yaralanmalarında",
+      "İç kanamalarda"
+    ],
+    correctAnswer: 1,
+    explanation: "Turnike çok sayıda kanamalı yaralının bulunduğu bir ortamda tek ilk yardımcı varsa uygulanabilir. Bu durumda zaman kritiktir ve turnike hayat kurtarıcı olabilir. Turnike sadece ekstremite (kol-bacak) kanamalarında, kontrol edilemeyen şiddetli kanamalarda ve son çare olarak uygulanır. Baş yaralanmalarında ve iç kanamalarda uygulanamaz."
+  },
+  {
+    id: 76,
+    question: "Kanamalarda uygulanan ilkyardımda aşağıdakilerden hangisi yapılmaz?",
+    options: [
+      "Kanayan bölge aşağıya doğru indirilir",
+      "Kanayan yere en yakın basınç noktasına baskı uygulanır",
+      "Baskı uygulamak yeterli olmuyorsa turnike uygulanır",
+      "Tıbbi yardım istenir"
+    ],
+    correctAnswer: 0,
+    explanation: "Kanamalarda kanayan bölge aşağıya doğru indirilmez, aksine mümkünse kalp seviyesinin üstüne kaldırılır. Bu kan akışını yavaşlatır ve kanamanın kontrol edilmesini kolaylaştırır. Diğer seçeneklerin hepsi kanama kontrolünde yapılan doğru uygulamalardır."
+  },
+  {
+    id: 77,
+    question: "Kanamanın değerlendirilmesinde İlkyardımcı neyi izlemelidir?",
+    options: [
+      "Şok belirtilerini",
+      "Tıkanma belirtilerini",
+      "Şeker düşmesi belirtilerini",
+      "Sağlık ekibinin ne kadar sürede geldiğini"
+    ],
+    correctAnswer: 0,
+    explanation: "Kanamanın değerlendirilmesinde ilk yardımcı şok belirtilerini izlemelidir. Şiddetli kanama kan kaybına ve şoka neden olabilir. Şok belirtileri arasında nabızda hızlanma, kan basıncında düşme, ciltte solgunluk, soğuk terleme, huzursuzluk ve bilinç bulanıklığı bulunur. Bu belirtilerin erken tespiti hayat kurtarıcıdır."
+  },
+  {
+    id: 78,
+    question: "İç kanamada ilkyardımda neler yapılmalıdır?",
+    options: [
+      "Hastanın bilinci ve ABC si değerlendirilir",
+      "Hastaya şok pozisyonu verilir",
+      "Hareket ettirilmez yiyecek içecek verilmez, tıbbi yardım istenir",
+      "Hepsi doğru"
+    ],
+    correctAnswer: 3,
+    explanation: "İç kanamada tüm bu işlemler yapılmalıdır: Hastanın bilinci ve ABC'si (Airway-Breathing-Circulation) değerlendirilir, şok pozisyonu verilir, hasta hareket ettirilmez, ağızdan hiçbir şey verilmez ve acil tıbbi yardım istenir. İç kanama görülemeyen ancak yaşamı tehdit eden ciddi bir durumdur ve kapsamlı yaklaşım gerektirir."
+  },
+  {
+    id: 79,
+    question: "Turnike ne kadar sıkılmalıdır?",
+    options: [
+      "Kanama duruncaya kadar",
+      "Kanama durduktan sonrada devam edilir",
+      "Çubuğun döndüğü kadar",
+      "İpin dayanma gücüne kadar"
+    ],
+    correctAnswer: 0,
+    explanation: "Turnike kanama duruncaya kadar sıkılmalıdır. Kanama durduktan sonra daha fazla sıkmaya gerek yoktur, bu durum gereksiz doku hasarına neden olabilir. Turnike etkili bir şekilde uygulandığında kanama durur ve nabız alınamaz hale gelir. Amaç kanamanın kontrolüdür, aşırı sıkma zararlıdır."
+  },
+  {
+    id: 80,
+    question: "Şok nedir?",
+    options: [
+      "Ani gelişen bir dolaşım yetmezliğidir",
+      "Uzun süren bilinç kaybıdır",
+      "Ani bir haber duyunca görülen şaşkınlıktır",
+      "Deprem sonrası oluşan artçı sarsıntılardır"
+    ],
+    correctAnswer: 0,
+    explanation: "Şok, ani gelişen bir dolaşım yetmezliğidir. Bu durumda kalp, vücudun ihtiyaç duyduğu kan miktarını pompalayamaz ve dokuların oksijen ihtiyacı karşılanamaz. Şok hayatı tehdit eden ciddi bir durumdur ve acil müdahale gerektirir. Belirtileri arasında hızlı nabız, düşük kan basıncı, solgun cilt, soğuk terleme ve bilinç bulanıklığı bulunur."
+  },
+  {
+    id: 81,
+    question: "Şok belirtileri nelerdir?",
+    options: [
+      "Kan basıncında düşme, Soğuk terleme",
+      "Hızlı ve zayıf nabız",
+      "Endişe huzursuzluk",
+      "Hepsi doğru"
+    ],
+    correctAnswer: 3,
+    explanation: "Şok belirtileri çok çeşitlidir ve hepsini bilmek hayat kurtarıcıdır: Kan basıncında düşme ve soğuk terleme, hızlı ve zayıf nabız, endişe ve huzursuzluk şokun temel belirtileridir. Bunlara ek olarak ciltte solgunluk, nefes almada güçlük, bilinç bulanıklığı, susuzluk hissi ve vücut ısısında düşme de görülebilir. Tüm bu belirtiler dokuların yetersiz oksijen almasından kaynaklanır."
+  },
+  {
+    id: 82,
+    question: "Bir travma sonucu deri yada mukozanın bütünlüğünün bozulmasına ne isim verilir?",
+    options: [
+      "Kanama",
+      "Yara",
+      "Ağrı",
+      "Şok"
+    ],
+    correctAnswer: 1,
+    explanation: "Bir travma sonucu deri veya mukoza bütünlüğünün bozulmasına yara denir. Yara, vücudun koruyucu bariyerinin zarar görmesi anlamına gelir ve enfeksiyon riski oluşturur. Kanama yaranın bir sonucu olabilir, ağrı yaranın belirtisi, şok ise ciddi yaralanmaların komplikasyonudur. Yara tanımı, doku bütünlüğünün bozulmasını ifade eden temel tıbbi terimdir."
+  },
+  {
+    id: 83,
+    question: "Delici göğüs yaralanmalarında ilkyardım nasıl olmalıdır?",
+    options: [
+      "Bilinç Kontrolü yapılır, yaşam bulguları değerlendirilir",
+      "Yaranın üzerini plastik poşet veya naylon sarılmış bir bezle kapatılır",
+      "Ağızdan hiçbir şey verilmez",
+      "Hepsi doğru"
+    ],
+    correctAnswer: 3,
+    explanation: "Delici göğüs yaralanmalarında tüm bu işlemler yapılmalıdır: Bilinç kontrolü yapılır ve yaşam bulguları sürekli değerlendirilir, yaranın üzeri hava geçirmez plastik poşet veya naylon sarılmış bezle (üç tarafı kapalı bir tarafı açık olacak şekilde) kapatılır, ağızdan hiçbir şey verilmez ve derhal tıbbi yardım istenir. Bu yaralanmalar pnömotoraks riskini taşıdığı için özel dikkat gerektirir."
+  },
+  {
+    id: 84,
+    question: "Bir trafik kazası sonucu oluşan yaralanmaya müdahale edilirken, hangi durumda yaralıyı araçtan çıkarmalıyız?",
+    options: [
+      "Yaralı sıkışmamış ise ve bir tehlike yoksa",
+      "Yaralının kol ve bacağında kırık varsa",
+      "Bilinci yerinde ve herhangi bir tehlike söz konusu değilse",
+      "Yaralının solunumu yoksa"
+    ],
+    correctAnswer: 3,
+    explanation: "Yaralıyı araçtan çıkarma kararı hayati tehlike durumunda alınmalıdır. Yaralının solunumu yoksa, temel yaşam desteği uygulamak için düz ve sert zemine çıkarılması gerekebilir. Diğer durumlarda (sıkışmamış ve tehlike yoksa, kırık varsa, bilinç yerindeyse) hasta araç içinde stabilize edilmeli ve sağlık ekibinin gelmesi beklenmelidir. Gereksiz hareket omurga yaralanması riskini artırır."
+  },
+  {
+    id: 85,
+    question: "Özellikle hangi hastalarda baş boyun ve gövde ekseni bozulmamalıdır?",
+    options: [
+      "Kafatası ve omurga yaralanmalarında",
+      "İç kanaması olan hastalar",
+      "Bacak kırıklarında",
+      "Kedi, köpek ısırmalarında"
+    ],
+    correctAnswer: 0,
+    explanation: "Baş-boyun-gövde ekseni özellikle kafatası ve omurga yaralanmalarında bozulmamalıdır. Bu yaralanmalarda yanlış hareket etme, omurilikte hasara neden olarak felce yol açabilir. Spinal immobilizasyon kritik öneme sahiptir. İç kanama, bacak kırığı veya hayvan ısırıklarında bu kadar kritik değildir, ancak genel olarak tüm yaralanmalarda dikkatli hareket etmek önemlidir."
+  },
+  {
+    id: 86,
+    question: "Donmuş bir kişiye aşağıdakilerden hangisi yapılmaz?",
+    options: [
+      "Sıcak içecekler verilir",
+      "Donmuş bölge hızla ovularak ısıtılır",
+      "Kuru giysiler verilir, soğukla teması kesilir",
+      "Su toplamış bölgeler patlatılmaz"
+    ],
+    correctAnswer: 1,
+    explanation: "Donmuş bölge hızla ovularak ısıtılmaz. Bu işlem doku hasarını artırır ve çok ağrılıdır. Donmuş bölgeler yavaş yavaş ve dikkatli bir şekilde ılık suyla ısıtılmalıdır. Sıcak içecek verilebilir (alkollü değilse), kuru giysiler giydirilir, soğukla temas kesilir ve su toplamış bölgeler patlatılmaz. Ani ısıtma doku nekrozuna neden olabilir."
+  },
+  {
+    id: 87,
+    question: "Kemik bütünlüğünün bozulmasına ne isim verilir?",
+    options: [
+      "Çıkık",
+      "Kırık",
+      "Burkulma",
+      "Eklem"
+    ],
+    correctAnswer: 1,
+    explanation: "Kemik bütünlüğünün bozulmasına kırık denir. Kırık, kemik dokusunda çatlak veya tam kopma olarak ortaya çıkar. Çıkık eklemin yerinden çıkması, burkulma ise bağların zarar görmesi anlamına gelir. Eklem ise kemiklerin birleştiği yerdir ve yaralanma türü değildir. Kırıklar kapalı veya açık olarak sınıflandırılır ve atel uygulaması ile stabilize edilir."
+  },
+  {
+    id: 88,
+    question: "Aşağıdaki şıkların hangisinde kırık çeşitleri doğru olarak yazılmıştır?",
+    options: [
+      "Uzun kırık, kısa kırık",
+      "Kapalı kırık, açık kırık",
+      "Kalın kırık, ince kırık",
+      "Büyük kırık, küçük kırık"
+    ],
+    correctAnswer: 1,
+    explanation: "Kırıklar temel olarak kapalı kırık ve açık kırık olmak üzere ikiye ayrılır. Kapalı kırıkta deri bütünlüğü korunur ve kemik parçaları dışarı çıkmaz. Açık kırıkta ise deri bütünlüğü bozulur ve kemik parçaları dışarıya çıkar. Bu sınıflandırma enfeksiyon riski ve tedavi yöntemi açısından kritik öneme sahiptir. Diğer seçeneklerde (uzun-kısa, kalın-ince, büyük-küçük) verilen terimler tıbbi kırık sınıflandırmasında kullanılmaz."
+  },
+  {
+    id: 89,
+    question: "Hangi çıkıkta ilkyardımcı çıkan eklemi yerine oturtmalıdır?",
+    options: [
+      "Omuz çıkıklarında",
+      "El bileği çıkıklarında",
+      "Parmaklardaki çıkıklarda",
+      "Hiçbirinde"
+    ],
+    correctAnswer: 3,
+    explanation: "İlk yardımcı hiçbir çıkıkta eklemi yerine oturtmaya çalışmamalıdır. Çıkık durumunda eklem immobilize edilir (tespit edilir), hasta ağrıyı azaltacak pozisyonda tutulur ve derhal tıbbi yardım istenir. Çıkığı yerine oturtmaya çalışmak sinir, damar ve yumuşak doku hasarına neden olabilir. Bu işlem ancak eğitimli sağlık personeli tarafından yapılmalıdır."
+  },
+  {
+    id: 90,
+    question: "Kısa süreli, yüzeysel ve geçici bilinç kaybına ne isim verilir?",
+    options: [
+      "Koma",
+      "Bayılma",
+      "Baş dönmesi",
+      "Kalp krizi"
+    ],
+    correctAnswer: 1,
+    explanation: "Kısa süreli, yüzeysel ve geçici bilinç kaybına bayılma (senkop) denir. Bayılma genellikle beyne giden kan akımının geçici olarak azalması sonucu oluşur ve kendiliğinden düzelir. Koma uzun süreli ve derin bilinç kaybıdır. Baş dönmesi bilinç kaybı olmaksızın yaşanan bir durumdur. Kalp krizi ise kalp kasının oksijen yetersizliğinden dolayı hasar görmesidir."
+  },
+  {
+    id: 91,
+    question: "Vücuda yabancı bir maddenin girmesi sonucu normal fonksiyonların bozulmasına ne isim verilir?",
+    options: [
+      "Kanama",
+      "Kırık",
+      "Sara",
+      "Zehirlenme"
+    ],
+    correctAnswer: 3,
+    explanation: "Vücuda yabancı bir maddenin girmesi sonucu normal fonksiyonların bozulmasına zehirlenme denir. Zehirlenme solunum yolu, sindirim yolu, cilt yolu veya damar yolu ile gerçekleşebilir. Kanama damar bütünlüğünün bozulması, kırık kemik bütünlüğünün bozulması, sara ise nörolojik bir hastalıktır. Zehirlenme vakalarında derhal tıbbi yardım alınmalı ve mümkünse zehirleyici maddenin türü belirlenmelidir."
+  },
+  {
+    id: 92,
+    question: "Zehirlenmelerin genel belirtisi aşağıdakilerden hangisidir?",
+    options: [
+      "Sinir Sistemi bozuklukları",
+      "Dolaşım, Solunum Sistemi bozuklukları",
+      "Sindirim sistemi bozuklukları",
+      "Hepsi doğru"
+    ],
+    correctAnswer: 3,
+    explanation: "Zehirlenmelerin genel belirtileri çok çeşitlidir ve tüm vücut sistemlerini etkileyebilir. Sinir sistemi bozuklukları (bilinç bulanıklığı, konvülziyon, baş ağrısı), dolaşım ve solunum sistemi bozuklukları (nabız değişiklikleri, solunum güçlüğü), sindirim sistemi bozuklukları (bulantı, kusma, karın ağrısı) zehirlenmelerde görülebilir. Zehirleyici maddenin türüne göre belirtiler değişiklik gösterebilir ancak genellikle birden fazla sistem etkilenir."
+  },
+  {
+    id: 93,
+    question: "Buruna yabancı cisim kaçmasında ilkyardım nasıl olmalıdır?",
+    options: [
+      "Sivri bir cisimle çıkarılır",
+      "Su ile yıkanarak çıkarılır",
+      "Burun duvarına bastırarak kuvvetli bir nefes verme ile cismin atılması sağlanır",
+      "Burun delikleri sıkılarak oturtulur"
+    ],
+    correctAnswer: 2,
+    explanation: "Buruna yabancı cisim kaçmasında temiz olan burun deliği kapatılır, cismin bulunduğu burun duvarına bastırılarak ağızdan kuvvetli bir nefes verme ile cismin atılması sağlanır. Sivri cisimlerle müdahale etmek cismi daha derine itebilir ve burun dokusuna zarar verebilir. Su ile yıkama da cismi daha derine itme riskini taşır. Bu yöntem işe yaramazsa derhal tıbbi yardım alınmalıdır."
+  },
+  {
+    id: 94,
+    question: "RENTEK manevrası ile yaralı araçtan çıkarılmadan önce hangilere bakılmalıdır?",
+    options: [
+      "Arabanın kontağı kapatılır.",
+      "Yaralının solunumu kontrol edilmelidir.",
+      "Yaralının emniyet kemeri takılıysa çıkarılmalı, ayakları sıkışmış mı kontrol edilmelidir.",
+      "Hepsi yapılmalıdır."
+    ],
+    correctAnswer: 3,
+    explanation: "RENTEK manevrası uygulanmadan önce tüm güvenlik önlemleri alınmalıdır: Arabanın kontağı kapatılarak yangın riski minimize edilir, yaralının solunum durumu değerlendirilerek aciliyet belirlenir, emniyet kemeri varsa güvenli şekilde çıkarılır ve ayakların sıkışıp sıkışmadığı kontrol edilir. Bu değerlendirmeler hem yaralının hem de kurtarıcının güvenliği için kritik öneme sahiptir ve RENTEK manevrası öncesi mutlaka yapılmalıdır."
+  },
+  {
+    id: 95,
+    question: "RENTEK Manevrası hangi hallerde kullanılır?",
+    options: [
+      "Dar bir tünelde sıkışmış kişiyi kurtarmak için",
+      "Kaza geçirmiş kişiyi teskin edip sakinleşmesini sağlamak için",
+      "Eğer tehlikeli bir durum varsa (Solunum durması, patlama ihtimali v.s.) omuriliği zedelemeden araçtan çıkarmak için",
+      "Herhangi bir tehlike söz konusu değilse"
+    ],
+    correctAnswer: 2,
+    explanation: "RENTEK manevrası sadece tehlikeli durumlar söz konusu olduğunda kullanılır. Solunum durması, patlama ihtimali, yangın riski, elektrik çarpması tehlikesi gibi acil durumlar varsa yaralıyı omuriliği zedelemeden araçtan güvenli şekilde çıkarmak için uygulanır. Normal şartlarda hasta araç içinde stabilize edilmeli ve sağlık ekibi beklenmeli, gereksiz hareket ettirilmemelidir. Bu manevra yaşam kurtarmak için son çare olarak kullanılan özel bir tekniktir."
   }
 ];
 
 // Yeni sorular eklemek için bu formatta ekleyin:
 /*
   {
-    id: 10,
+    id: 96,
     question: "Yeni soru metni?",
     options: [
       "A seçeneği",

@@ -25,24 +25,66 @@ const getRandomQuestions = (count = 40) => {
   
   // Her soru için şıkları karıştır ve doğru cevabın yeni pozisyonunu bul
   return selectedQuestions.map(question => {
-    const optionsWithIndex = question.options.map((option, index) => ({
-      option,
-      originalIndex: index
-    }));
-    
-    // Şıkları karıştır
-    const shuffledOptions = optionsWithIndex.sort(() => Math.random() - 0.5);
-    
-    // Yeni doğru cevap pozisyonunu bul
-    const newCorrectAnswer = shuffledOptions.findIndex(
-      item => item.originalIndex === question.correctAnswer
+    // "Hepsi doğru" veya "Hepsi yapılır" gibi şıkları kontrol et
+    const hasAllCorrectOption = question.options.some(option => 
+      option.toLowerCase().includes('hepsi') && 
+      (option.toLowerCase().includes('doğru') || option.toLowerCase().includes('yapılır'))
     );
     
-    return {
-      ...question,
-      options: shuffledOptions.map(item => item.option),
-      correctAnswer: newCorrectAnswer
-    };
+    if (hasAllCorrectOption) {
+      // "Hepsi doğru" şıkkı varsa, son şıkkı sabit tut, diğerlerini karıştır
+      const lastOption = question.options[question.options.length - 1];
+      const otherOptions = question.options.slice(0, -1);
+      
+      // Diğer şıkları index'leriyle birlikte karıştır
+      const otherOptionsWithIndex = otherOptions.map((option, index) => ({
+        option,
+        originalIndex: index
+      }));
+      
+      const shuffledOtherOptions = otherOptionsWithIndex.sort(() => Math.random() - 0.5);
+      
+      // Yeni şık dizisini oluştur (karışık + son şık)
+      const newOptions = [...shuffledOtherOptions.map(item => item.option), lastOption];
+      
+      // Yeni doğru cevap pozisyonunu bul
+      let newCorrectAnswer;
+      if (question.correctAnswer === question.options.length - 1) {
+        // Doğru cevap son şıktı (hepsi doğru), pozisyonu aynı kalır
+        newCorrectAnswer = newOptions.length - 1;
+      } else {
+        // Doğru cevap diğer şıklardan biriydi
+        newCorrectAnswer = shuffledOtherOptions.findIndex(
+          item => item.originalIndex === question.correctAnswer
+        );
+      }
+      
+      return {
+        ...question,
+        options: newOptions,
+        correctAnswer: newCorrectAnswer
+      };
+    } else {
+      // "Hepsi doğru" şıkkı yoksa normal karıştırma yap
+      const optionsWithIndex = question.options.map((option, index) => ({
+        option,
+        originalIndex: index
+      }));
+      
+      // Şıkları karıştır
+      const shuffledOptions = optionsWithIndex.sort(() => Math.random() - 0.5);
+      
+      // Yeni doğru cevap pozisyonunu bul
+      const newCorrectAnswer = shuffledOptions.findIndex(
+        item => item.originalIndex === question.correctAnswer
+      );
+      
+      return {
+        ...question,
+        options: shuffledOptions.map(item => item.option),
+        correctAnswer: newCorrectAnswer
+      };
+    }
   });
 };
 
@@ -395,7 +437,7 @@ export default function App() {
                 height: 80, 
                 marginBottom: 10, 
                 marginTop: -100,
-                opacity: basarili ? 0.5 : 1.0 
+                opacity: basarili ? 1.0 : 1.0 
               }}
               resizeMode="contain"
             />
