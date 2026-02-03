@@ -7,9 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#667eea"
+      "image": "./ilk-yardim.png"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -23,10 +21,19 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#667eea"
       },
-      "package": "com.ilkyardim.sorubank"
+      "package": "com.ilkyardim.sorubank",
+      "config": {}
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9b8c8dba-ccce-4747-af02-242b77602889"
+      }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

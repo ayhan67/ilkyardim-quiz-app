@@ -1,0 +1,114 @@
+Initialized native services in: C:\Users\USER\.gradle\native
+Initialized jansi services in: C:\Users\USER\.gradle\native
+The client will now receive all logging from the daemon (pid: 15604). The daemon log file: C:\Users\USER\.gradle\daemon\8.13\daemon-15604.out.log
+Starting 4th build in daemon [uptime: 3 mins 1.464 secs, performance: 99%, GC rate: 0.11/s, heap usage: 1% of 1.3 GiB, non-heap usage: 28% of 512 MiB]
+Using 8 worker leases.
+Now considering [C:\ILKYARDIM_CLAUDE\android] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Starting process 'command 'node''. Working directory: C:\ILKYARDIM_CLAUDE\android Command: node --print require.resolve('@react-native/gradle-plugin/package.json', { paths: [require.resolve('react-native/package.json')] })
+Successfully started process 'command 'node''
+Starting process 'command 'node''. Working directory: C:\ILKYARDIM_CLAUDE\android Command: node --print require.resolve('expo-modules-autolinking/package.json', { paths: [require.resolve('expo/package.json')] })
+Successfully started process 'command 'node''
+Now considering [C:\ILKYARDIM_CLAUDE\node_modules\@react-native\gradle-plugin, C:\ILKYARDIM_CLAUDE\android] as hierarchies to watch
+Resolved plugin [id: 'org.gradle.toolchains.foojay-resolver-convention', version: '0.5.0']
+Now considering [C:\ILKYARDIM_CLAUDE\node_modules\expo-modules-autolinking\android\expo-gradle-plugin, C:\ILKYARDIM_CLAUDE\node_modules\@react-native\gradle-plugin, C:\ILKYARDIM_CLAUDE\android] as hierarchies to watch
+
+> Configure project :gradle-plugin
+Evaluating project ':gradle-plugin' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\@react-native\gradle-plugin\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm', version: '2.0.21', apply: false]
+
+> Configure project :gradle-plugin:react-native-gradle-plugin
+Evaluating project ':gradle-plugin:react-native-gradle-plugin' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\@react-native\gradle-plugin\react-native-gradle-plugin\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm', version: '2.0.21']
+Resolved plugin [id: 'java-gradle-plugin']
+Using Kotlin Gradle Plugin gradle85 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+
+> Configure project :gradle-plugin:settings-plugin
+Evaluating project ':gradle-plugin:settings-plugin' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\@react-native\gradle-plugin\settings-plugin\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm', version: '2.0.21']
+Resolved plugin [id: 'java-gradle-plugin']
+Using Kotlin Gradle Plugin gradle85 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+
+> Configure project :gradle-plugin:shared
+Evaluating project ':gradle-plugin:shared' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\@react-native\gradle-plugin\shared\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm', version: '2.0.21']
+Using Kotlin Gradle Plugin gradle85 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+
+> Configure project :gradle-plugin:shared-testutil
+Evaluating project ':gradle-plugin:shared-testutil' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\@react-native\gradle-plugin\shared-testutil\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm', version: '2.0.21']
+Using Kotlin Gradle Plugin gradle85 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+Resolved plugin [id: 'com.facebook.react.settings']
+
+> Configure project :expo-gradle-plugin
+Evaluating project ':expo-gradle-plugin' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\expo-modules-autolinking\android\expo-gradle-plugin\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm', version: '1.9.24', apply: false]
+Resolved plugin [id: 'java-gradle-plugin']
+
+> Configure project :expo-gradle-plugin:expo-autolinking-plugin
+Evaluating project ':expo-gradle-plugin:expo-autolinking-plugin' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\expo-modules-autolinking\android\expo-gradle-plugin\expo-autolinking-plugin\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm']
+Resolved plugin [id: 'java-gradle-plugin']
+Using Kotlin Gradle Plugin gradle82 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+
+> Configure project :expo-gradle-plugin:expo-autolinking-plugin-shared
+Evaluating project ':expo-gradle-plugin:expo-autolinking-plugin-shared' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\expo-modules-autolinking\android\expo-gradle-plugin\expo-autolinking-plugin-shared\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm']
+Resolved plugin [id: 'org.jetbrains.kotlin.plugin.serialization', version: '1.9.24']
+Using Kotlin Gradle Plugin gradle82 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+
+> Configure project :expo-gradle-plugin:expo-autolinking-settings-plugin
+Evaluating project ':expo-gradle-plugin:expo-autolinking-settings-plugin' using build file 'C:\ILKYARDIM_CLAUDE\node_modules\expo-modules-autolinking\android\expo-gradle-plugin\expo-autolinking-settings-plugin\build.gradle.kts'.
+Resolved plugin [id: 'org.jetbrains.kotlin.jvm']
+Resolved plugin [id: 'java-gradle-plugin']
+Using Kotlin Gradle Plugin gradle82 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+Resolved plugin [id: 'expo-autolinking-settings']
+Variant Selection Exception: org.gradle.internal.component.resolution.failure.exception.VariantSelectionByAttributesException caused by Resolution Failure: org.gradle.internal.component.resolution.failure.type.NoCompatibleVariantsFailure
+Variant Selection Exception: org.gradle.internal.component.resolution.failure.exception.VariantSelectionByAttributesException caused by Resolution Failure: org.gradle.internal.component.resolution.failure.type.NoCompatibleVariantsFailure
+
+[Incubating] Problems report is available at: file:///C:/ILKYARDIM_CLAUDE/android/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Could not resolve all dependencies for configuration 'classpath'.
+> Could not resolve project :gradle-plugin:settings-plugin.
+  Required by:
+      unspecified:unspecified:unspecified
+   > Dependency requires at least JVM runtime version 11. This build uses a Java 8 JVM.
+> Could not resolve project :expo-gradle-plugin:expo-autolinking-settings-plugin.
+  Required by:
+      unspecified:unspecified:unspecified
+   > Dependency requires at least JVM runtime version 11. This build uses a Java 8 JVM.
+
+* Try:
+> Run this build using a Java 11 or newer JVM.
+> Run with --stacktrace option to get the stack trace.
+> Run with --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 6s
+Watched directory hierarchies: []

@@ -1,0 +1,28 @@
+{
+  "cli": {
+    "version": ">= 16.17.4",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_ADMOB_ANDROID_APP_ID": "ca-app-pub-8638517479839090~7555587234",
+        "EXPO_PUBLIC_ADMOB_IOS_APP_ID": "ca-app-pub-8638517479839090~7555587234"
+      }
+    },
+    "production": {
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
