@@ -71,4 +71,4 @@ npx expo start
 
 ## Lisans
 
-Bu proje telif hakkı ile korunmaktadır. Tüm hakları saklıdır. 2025
+Bu proje telif hakkı ile korunmaktadır. Tüm hakları saklıdır. 2026
